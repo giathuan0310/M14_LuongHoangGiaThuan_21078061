@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Product</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Product List </h2>
+         <a class="btn btn-success" th:href="@{/products/add-product}">Thêm mới </a>
+         
+        <!-- Search Form -->
+<div class="row mb-3">
+    <div class="col-md-6 offset-md-6">
+        <form method="get" th:action="@{/products/search}" class="input-group">
+            <input type="text" name="keyword" class="form-control" placeholder="Search products..." />
+            <button type="submit" class="btn btn-secondary">Search</button>
+        </form>
+    </div>
+</div>
+
+        
+        <!-- Display search results or all products -->
+        <div th:if="${#lists.isEmpty(pds)}">
+            <div class="alert alert-warning" role="alert">
+                No products found for the keyword: <strong th:text="${keyword}"></strong>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Full Name</th>
+                    <th>Description</th>
+                    <th>Register Date</th>
+                    <th>Is Active</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Thymeleaf loop to display products -->
+                <tr th:each="product : ${pds}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.code}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.registerDate}"></td>
+                    <td th:text="${product.isActive}"></td>
+                    <td th:text="${product.category.name}"></td>
+                    <td>
+                        <a th:href="@{/products/edit-product/{id}(id=${product.id})}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                        <a th:href="@{/products/delete(productId=${product.id})}" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Bạn có chắc chắn xóa không?');">Delete</a>
+                    </td>
+                </tr>
+				
+				
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

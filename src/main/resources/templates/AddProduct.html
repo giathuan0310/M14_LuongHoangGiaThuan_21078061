@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AddProduct</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        h2 {
+            font-weight: bold;
+            color: '#ccc';
+            text-align: center;
+        }
+        .footer {
+            width: 200px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 >Add New Product</h2>
+        <!-- Form thêm sản phẩm -->
+        <form th:action="@{/products/save}" th:object="${addNewProduct}" method="post">
+            <div class="form-group">
+                <label for="code">Code</label>
+                <input type="text" class="form-control" id="code" th:field="*{code}" placeholder="Enter product code">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter product name">
+            </div>
+
+            
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Enter product description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="registerDate">Register Date</label>
+                <input type="date" class="form-control" id="registerDate" th:field="*{registerDate}">
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select th:field="*{category}" id="category" class="form-control">
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Active</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="activeYes" th:field="*{isActive}" value="true">
+                    <label class="form-check-label" for="activeYes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="activeNo" th:field="*{isActive}" value="false">
+                    <label class="form-check-label" for="activeNo">No</label>
+                </div>
+            </div>
+
+            <div class="footer">
+                <a href="/products" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
